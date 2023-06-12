@@ -1,0 +1,155 @@
+$centertrans: translate(-50%, -50%);
+
+@mixin full(){
+    width: 100%;
+    height: 100%;
+}
+
+@mixin magic($name, $z){
+    z-index: $Z;
+    animation-name: $name;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 2;
+}
+
+@mixin rotation($y) {
+    transform: perspective(600px) rotateY($y);
+}
+
+@mixin each($z, $x, $y) {
+    transform: rotateZ($z) translateX($x) translateY($y);
+}
+
+@mixin fifty(){
+    top:50%;
+    left: 50%;
+}
+
+@mixin size($h, $w) {
+    height: $h;
+    width: $w;
+}
+
+@mixin bandf(){
+    @include full();
+    position: absolute;
+    overflow: hidden;
+    backface-visibility: hidden;
+}
+
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+
+
+.cards{
+    @include size(500px,900px);
+    @include fifty();
+    position: absolute;
+    transform: $centertrans;
+    border: 3px solid gold;
+    background-color: rgba(22, 2, 2, 0.989); 
+
+
+    .acard{
+        position: absolute;
+        @include size(330px,220px);
+        @include fifty();
+        transform: $centertrans;
+    }
+
+    .front{
+        @include magic;
+        @include bandf();
+    }
+
+    .back{
+        @include bandf();
+        @include magic($magic : magicBack);
+    }
+
+    img{
+        @include full();
+    }
+
+    .card__1{
+        z-index: 3;
+    }
+    .card__2{
+        @include magic(magicCard2, 2);
+    }
+    
+    .card__3{
+        @include magic(magicCard3, 1);
+    }
+    
+    .card__4{
+        @include magic(magicCard4, 5);
+    }
+    
+    .card__5{
+        @include magic(magicCard5, 4);
+    }
+
+
+
+}
+
+
+@keyframes magicFront {
+    0%{
+        @include rotation(180deg);
+    }
+    50%{
+        @include rotation(0deg);
+    }
+    100%{
+        @include rotation(-180deg);    
+    }
+}
+
+@keyframes magicBack {
+    0%{
+        @include rotation(0deg);
+    }
+    50%{
+        @include rotation(-180deg);
+    }
+    100%{
+        @include rotation(-360deg);
+    }
+}
+
+@keyframes magicCard2 {
+    0%{  }
+    50%{
+        @include each(-20deg, -200px, -200px);
+    }
+}
+
+@keyframes magicCard3 {
+    0%{  }
+    50%{
+        @include each(-45deg, -210px, -250px);
+    }
+}
+
+@keyframes magicCard4 {
+    0%{  }
+    50%{
+        @include each(45deg, 80px, -100px);
+    }
+}
+
+@keyframes magicCard5 {
+    0%{  }
+    50%{
+        @include each(20deg, 0px, -120px);
+    }
+}
+
